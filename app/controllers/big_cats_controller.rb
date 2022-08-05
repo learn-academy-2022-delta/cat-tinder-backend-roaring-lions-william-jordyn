@@ -6,7 +6,11 @@ class BigCatsController < ApplicationController
     
       def create
         cat = BigCat.create(cat_params)
-        render json: cat
+        if cat.valid?
+          render json: cat
+        else
+           render json: cat.errors, status: 422
+        end
       end
     
       def update
