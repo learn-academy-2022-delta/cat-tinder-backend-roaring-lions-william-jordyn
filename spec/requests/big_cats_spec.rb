@@ -92,4 +92,86 @@ RSpec.describe "BigCats", type: :request do
       expect(cats).to be_empty
     end
   end
+  
+  describe "cannot create a cat without valid attributes" do
+    it "doesn't create a cat without a name" do
+      cat_params = {
+        cat: {
+          age: 4,
+          enjoys: 'Long walks in the jungle.',
+          funfact:'Does a really good Mufasa impression.',
+          image: 'https://images.unsplash.com/photo-1614027164847-1b28cfe1df60?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2770&q=80'
+        }
+      }
+
+      post '/big_cats', params: cat_params
+      expect(response.status).to eq 422
+      cat = JSON.parse(response.body)
+      expect(cat['name']).to include "can't be blank"
+    end
+
+    it "doesn't create a cat without a age" do
+      cat_params = {
+        cat: {
+          name: 'Fluffy',
+          enjoys: 'Long walks in the jungle.',
+          funfact:'Does a really good Mufasa impression.',
+          image: 'https://images.unsplash.com/photo-1614027164847-1b28cfe1df60?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2770&q=80'
+        }
+      }
+
+      post '/big_cats', params: cat_params
+      expect(response.status).to eq 422
+      cat = JSON.parse(response.body)
+      expect(cat['age']).to include "can't be blank"
+    end
+
+    it "doesn't create a cat without a enjoys" do
+      cat_params = {
+        cat: {
+          name: 'Fluffy',
+          age: 4,
+          funfact:'Does a really good Mufasa impression.',
+          image: 'https://images.unsplash.com/photo-1614027164847-1b28cfe1df60?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2770&q=80'
+        }
+      }
+
+      post '/big_cats', params: cat_params
+      expect(response.status).to eq 422
+      cat = JSON.parse(response.body)
+      expect(cat['enjoys']).to include "can't be blank"
+    end
+
+    it "doesn't create a cat without a image" do
+      cat_params = {
+        cat: {
+          name: 'Fluffy',
+          age: 4,
+          enjoys: 'Long walks in the jungle.',
+          funfact:'Does a really good Mufasa impression.',
+        }
+      }
+
+      post '/big_cats', params: cat_params
+      expect(response.status).to eq 422
+      cat = JSON.parse(response.body)
+      expect(cat['image']).to include "can't be blank"
+    end
+
+    it "doesn't create a cat without a funfact" do
+      cat_params = {
+        cat: {
+          name: 'Fluffy',
+          age: 4,
+          enjoys: 'Long walks in the jungle.',
+          image: 'https://images.unsplash.com/photo-1614027164847-1b28cfe1df60?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2770&q=80'
+        }
+      }
+
+      post '/big_cats', params: cat_params
+      expect(response.status).to eq 422
+      cat = JSON.parse(response.body)
+      expect(cat['funfact']).to include "can't be blank"
+    end
+  end
 end
