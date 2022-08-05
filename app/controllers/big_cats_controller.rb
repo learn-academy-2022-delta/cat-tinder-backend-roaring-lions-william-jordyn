@@ -1,0 +1,2 @@
+class BigCatsController < ApplicationController
+end
