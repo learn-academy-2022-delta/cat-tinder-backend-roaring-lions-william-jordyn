@@ -27,7 +27,7 @@ class BigCatsController < ApplicationController
     
       private
       def cat_params
-        params.require(:cat).permit(:name, :age, :enjoys, :funfact, :image)
+        params.require(:big_cat).permit(:name, :age, :enjoys, :funfact, :image)
       end
 end
 
